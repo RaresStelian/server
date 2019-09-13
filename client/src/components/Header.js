@@ -1,55 +1,53 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Typography, Button, List, ListItem } from '@material-ui/core'
+import { AppBar, Toolbar, Typography, List, ListItem } from '@material-ui/core'
+import Payments from './Payments'
 
 class Header extends Component {
   renderContent() {
     switch (this.props.auth) {
       case null:
         // return 'still deciding'
-        break
+        return
 
       case false:
         return (
-          <ListItem>
-            <a style={{ textDecoration: 'none', color: 'white' }} href='/auth/google'>
-              Login with Google
-            </a>
-          </ListItem>
+          <List>
+            <ListItem>
+              <a style={{ textDecoration: 'none', color: 'white' }} href='/auth/google'>
+                Login with Google
+              </a>
+            </ListItem>
+          </List>
         )
 
       default:
         return (
-          <ListItem>
-            <a style={{ textDecoration: 'none', color: 'white' }} href='/api/logout'>
-              Logout
-            </a>
-          </ListItem>
+          <List>
+            <ListItem>
+              <Payments />
+              <a style={{ paddingLeft: '20px', textDecoration: 'none', color: 'white' }} href='/api/logout'>
+                Logout
+              </a>
+            </ListItem>
+          </List>
         )
     }
   }
 
   render() {
-    console.log(this.props)
     return (
       <div>
         <AppBar position='static'>
-          <Toolbar style={{ backgroundColor: 'rgb(22, 180, 205)', color: 'white' }}>
-            {/* <IconButton edge='start'  color='inherit' aria-label='menu'>
-              <MenuIcon />
-            </IconButton> */}
+          <Toolbar style={{ backgroundColor: 'rgb(22, 180, 205)', color: 'white', height: '10px' }}>
             <Typography noWrap style={{ flexGrow: 1 }}>
               <Link to={this.props.auth ? '/surveys' : '/'} style={{ textDecoration: 'none', color: 'white' }}>
                 Emaily
               </Link>
             </Typography>
             <List>
-              <ListItem style={{ display: 'flex', flexDirection: 'row' }}>
-                <a style={{ textDecoration: 'none', color: 'white' }} href='/surveys/new'>
-                  {this.renderContent()}
-                </a>
-              </ListItem>
+              <ListItem style={{ display: 'flex', flexDirection: 'row' }}>{this.renderContent()}</ListItem>
             </List>
           </Toolbar>
         </AppBar>
@@ -57,10 +55,6 @@ class Header extends Component {
     )
   }
 }
-
-// const mapStateToProps = state => {
-//   return { auth: state.auth }
-// }
 
 /* destructuring state */
 const mapStateToProps = ({ auth }) => {
