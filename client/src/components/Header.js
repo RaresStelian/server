@@ -27,6 +27,7 @@ class Header extends Component {
           <List>
             <ListItem>
               <Payments />
+              <div style={{ paddingLeft: '20px' }}>Credits: {this.props.auth.credits}</div>
               <a style={{ paddingLeft: '20px', textDecoration: 'none', color: 'white' }} href='/api/logout'>
                 Logout
               </a>

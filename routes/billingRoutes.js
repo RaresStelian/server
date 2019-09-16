@@ -1,10 +1,15 @@
 const keys = require('../config/keys')
-// @ts-ignore
 const stripe = require('stripe')(keys.stripeSecretKey)
+const requireLogin = '../middlewares/requireLogin'
 
 module.exports = app => {
   app.post('/api/stripe', async (req, res) => {
     try {
+      requireLogin
+      /*  we no longer need this check because we have the middleware requireLogin to check this */
+      // if (!req.user) {
+      //   return res.status(401).send({ error: 'You must log in!' })
+      // }
       const charge = await stripe.charges.create({
         amount: 500,
         currency: 'usd',
